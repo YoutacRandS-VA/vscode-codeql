@@ -29,6 +29,7 @@ describe(MethodRow.name, () => {
     provenance: "manual",
   };
   const onChange = jest.fn();
+  const onMethodClick = jest.fn();
 
   const viewState = createMockModelEditorViewState();
 
@@ -39,10 +40,12 @@ describe(MethodRow.name, () => {
         methodCanBeModeled={true}
         modeledMethods={[modeledMethod]}
         methodIsUnsaved={false}
+        methodIsSelected={false}
         modelingInProgress={false}
         revealedMethodSignature={null}
         viewState={viewState}
         onChange={onChange}
+        onMethodClick={onMethodClick}
         {...props}
       />,
     );

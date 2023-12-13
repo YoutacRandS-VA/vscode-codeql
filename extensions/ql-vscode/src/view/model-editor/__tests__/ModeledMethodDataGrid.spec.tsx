@@ -38,6 +38,7 @@ describe(ModeledMethodDataGrid.name, () => {
     supported: true,
   });
   const onChange = jest.fn();
+  const onMethodClick = jest.fn();
 
   const viewState = createMockModelEditorViewState();
 
@@ -57,11 +58,13 @@ describe(ModeledMethodDataGrid.name, () => {
           ],
         }}
         modifiedSignatures={new Set([method1.signature])}
+        selectedSignatures={new Set()}
         inProgressMethods={new Set()}
         viewState={viewState}
         hideModeledMethods={false}
         revealedMethodSignature={null}
         onChange={onChange}
+        onMethodClick={onMethodClick}
         {...props}
       />,
     );

@@ -7,6 +7,7 @@ import { createMockModelEditorViewState } from "../../../../test/factories/model
 describe(LibraryRow.name, () => {
   const method = createMethod();
   const onChange = jest.fn();
+  const onMethodClick = jest.fn();
   const onSaveModelClick = jest.fn();
   const onGenerateFromLlmClick = jest.fn();
   const onStopGenerateFromLlmClick = jest.fn();
@@ -32,11 +33,13 @@ describe(LibraryRow.name, () => {
           ],
         }}
         modifiedSignatures={new Set([method.signature])}
+        selectedSignatures={new Set()}
         inProgressMethods={new Set()}
         viewState={viewState}
         hideModeledMethods={false}
         revealedMethodSignature={null}
         onChange={onChange}
+        onMethodClick={onMethodClick}
         onSaveModelClick={onSaveModelClick}
         onGenerateFromLlmClick={onGenerateFromLlmClick}
         onStopGenerateFromLlmClick={onStopGenerateFromLlmClick}
