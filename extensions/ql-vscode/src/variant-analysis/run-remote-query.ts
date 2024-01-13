@@ -39,6 +39,7 @@ import { tryGetQueryMetadata } from "../codeql-cli/query-metadata";
 import { askForLanguage, findLanguage } from "../codeql-cli/query-language";
 import type { QlPackFile } from "../packaging/qlpack-file";
 import { expandShortPaths } from "../common/short-paths";
+import { glob } from "glob";
 
 /**
  * Well-known names for the query pack used by the server.
@@ -168,6 +169,9 @@ async function generateQueryPack(
   void extLogger.log(
     `Compiling and bundling query pack from ${queryPackDir} to ${bundlePath}. (This may take a while.)`,
   );
+  const contents = await glob(join(queryPackDir, "**"));
+  console.log(`Pack contents:\n${contents}`);
+
   await cliServer.packBundle(queryPackDir, workspaceFolders, bundlePath, [
     "--pack-path",
     tmpDir.compiledPackDir,
