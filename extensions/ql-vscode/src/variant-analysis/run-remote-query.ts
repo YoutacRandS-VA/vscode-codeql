@@ -64,7 +64,9 @@ async function generateQueryPack(
   tmpDir: RemoteQueryTempDir,
 ): Promise<GeneratedQueryPack> {
   const originalPackRoot = await findPackRoot(queryFile);
+  console.log(`originalPackRoot: ${originalPackRoot}`);
   const packRelativePath = relative(originalPackRoot, queryFile);
+  console.log(`packRelativePath: ${packRelativePath}`);
   const workspaceFolders = getOnDiskWorkspaceFolders();
   const extensionPacks = await getExtensionPacksToInject(
     cliServer,
@@ -172,7 +174,7 @@ async function generateQueryPack(
   console.log(
     `Compiling and bundling query pack from ${queryPackDir} to ${bundlePath}. (This may take a while.)`,
   );
-  const contents = await glob(join(queryPackDir, "**"));
+  const contents = await glob("**", { cwd: queryPackDir, nodir: true });
   console.log(`Pack contents:\n${contents}`);
 
   await cliServer.packBundle(queryPackDir, workspaceFolders, bundlePath, [
