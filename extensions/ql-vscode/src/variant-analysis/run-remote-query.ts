@@ -169,6 +169,9 @@ async function generateQueryPack(
   void extLogger.log(
     `Compiling and bundling query pack from ${queryPackDir} to ${bundlePath}. (This may take a while.)`,
   );
+  console.log(
+    `Compiling and bundling query pack from ${queryPackDir} to ${bundlePath}. (This may take a while.)`,
+  );
   const contents = await glob(join(queryPackDir, "**"));
   console.log(`Pack contents:\n${contents}`);
 
@@ -299,12 +302,14 @@ async function createRemoteQueriesTempDirectory(): Promise<RemoteQueryTempDir> {
   // archive if the pack path contains any 8.3 components.
   const remoteQueryDir = {
     ...shortRemoteQueryDir,
-    dir: expandShortPaths(shortRemoteQueryDir.path),
+    dir: await expandShortPaths(shortRemoteQueryDir.path),
   };
   const queryPackDir = join(remoteQueryDir.path, "query-pack");
   await mkdirp(queryPackDir);
   const compiledPackDir = join(remoteQueryDir.path, "compiled-pack");
-  const bundleFile = await getPackedBundlePath(tmpDir.name);
+  const bundleFile = await expandShortPaths(
+    await getPackedBundlePath(tmpDir.name),
+  );
   return { remoteQueryDir, queryPackDir, compiledPackDir, bundleFile };
 }
 
